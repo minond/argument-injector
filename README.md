@@ -4,7 +4,7 @@
 be "bound" to an injector object which hijacks the function call and injects
 arguments when the function is executed.
 
-# Injector
+### Injector
 acts as a holder of dependencies
 
 ```
@@ -12,7 +12,7 @@ var Injector = require('injector'),
     injector = new Injector();
 ```
 
-# .dependency(/* String */ name, /* mixed */ value)
+### .dependency(/* String */ name, /* mixed */ value)
 this is how dependencies are registered with the injector object
 
 ```
@@ -22,7 +22,7 @@ injector.dependency('myService', {
     }
 });
 ```
-# .bind(/* Function */ func, /* Object */ scope)
+### .bind(/* Function */ func, /* Object */ scope)
 and this is how functions are "bound" to the injector object functions are
 defined the way you normally would - as if you were going to pass the arguments
 manually:
@@ -43,7 +43,7 @@ you can call the function and your dependencies will be passed automatically
 myFunction() // myService will be injected
 ```
 
-# .trigger(/* Function */ func, /* Object */ scope)
+### .trigger(/* Function */ func, /* Object */ scope)
 there's also the possiblity to bind and trigger functions all in one swoop
 
 ```
