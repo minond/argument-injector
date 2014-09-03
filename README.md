@@ -7,7 +7,7 @@ arguments when the function is executed.
 ### `Injector`
 acts as a holder of dependencies
 
-```
+```js
 var Injector = require('injector'),
     injector = new Injector();
 ```
@@ -15,7 +15,7 @@ var Injector = require('injector'),
 ### `.dependency(/* String */ name, /* mixed */ value)`
 this is how dependencies are registered with the injector object
 
-```
+```js
 injector.dependency('myService', {
     isActive: function () {
         return true;
@@ -27,26 +27,26 @@ and this is how functions are "bound" to the injector object functions are
 defined the way you normally would - as if you were going to pass the arguments
 manually:
 
-```
+```js
 function myFunction(myService) {
     return myService.isActive() ? 'you are active' : 'you are not active';
 }
 ```
 
 then you can bind them to your injector
-```
+```js
 myFunction = injector.bind(myFunction);
 ```
 
 you can call the function and your dependencies will be passed automatically
-```
+```js
 myFunction() // myService will be injected
 ```
 
 ### `.trigger(/* Function */ func, /* Object */ scope)`
 there's also the possiblity to bind and trigger functions all in one swoop
 
-```
+```js
 injected.dependency('name', 'Marcos');
 
 // binds then triggers the function. outputs 'Marcos'
