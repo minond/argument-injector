@@ -9,7 +9,7 @@ arguments when the function is executed.
 acts as a holder of dependencies
 
 ```js
-var Injector = require('injector'),
+var Injector = require('argument-injector'),
     injector = new Injector();
 ```
 
