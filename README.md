@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/minond/injector.svg?branch=master)](https://travis-ci.org/minond/injector)
-[![Coverage Status](https://coveralls.io/repos/minond/injector/badge.png?branch=master)](https://coveralls.io/r/minond/injector?branch=master)
+[![Build Status](https://travis-ci.org/minond/argument-injector.svg?branch=master)](https://travis-ci.org/minond/argument-injector)
+[![Coverage Status](https://coveralls.io/repos/minond/argument-injector/badge.png?branch=master)](https://coveralls.io/r/minond/argument-injector?branch=master)
 
 `injector` is a basic argument injector for Node.js. it allows any function to
 be "bound" to an injector object which hijacks the function call and injects
