@@ -1,11 +1,11 @@
 {
-  "name": "injector",
+  "name": "argument-injector",
   "version": "0.0.0",
   "description": "arguments injector for node",
   "main": "src/injector.js",
   "repository": {
     "type": "git",
-    "url": "http://github.com/minond/injector"
+    "url": "http://github.com/minond/argument-injector"
   },
   "devDependencies": {
     "expect.js": "~0.3.1",
