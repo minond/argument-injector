@@ -22,6 +22,7 @@
     "load-grunt-tasks": "~0.4.0",
     "lodash": "~2.4.1",
     "merge-defaults": "~0.1.0",
-    "mocha": "~1.18.2"
+    "mocha": "~1.18.2",
+    "coveralls": "~2.11.1"
   }
 }
