@@ -7,6 +7,10 @@
     "type": "git",
     "url": "http://github.com/minond/argument-injector"
   },
+  "scripts": {
+    "postinstall": "git submodule update --init",
+    "test": "grunt"
+  },
   "devDependencies": {
     "expect.js": "~0.3.1",
     "glob": "~3.2.9",
