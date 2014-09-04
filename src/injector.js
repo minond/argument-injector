@@ -16,24 +16,34 @@ function Injector () {
 /**
  * add a new dependency that can be injected
  * @chainable
- * @method dependency
+ * @method register
  * @param {string} name they name of the dependency variable
  * @param {mixed} dep the actual dependency variable that will be passed
  * @return {Injector} own instance
  */
-Injector.prototype.dependency = function (name, dep) {
+Injector.prototype.register = function (name, dep) {
     this.deps[ name ] = dep;
     return this;
 };
 
 /**
  * get a dependency by its name
- * @method get_dependency
+ * @method get
  * @param {string} name dependency di name. ie. $Ajax
  * @return {mixed} the actual dependency variable
  */
-Injector.prototype.get_dependency = function (name) {
-    return name in this.deps ? this.deps[ name ] : null;
+Injector.prototype.get = function (name) {
+    return this.has(name) ? this.deps[ name ] : null;
+};
+
+/**
+ * checks if an argument name is a dependency injection argument
+ * @method has
+ * @param {string} argname
+ * @return {Boolean}
+ */
+Injector.prototype.has = function (argname) {
+    return argname in this.deps;
 };
 
 /**
@@ -46,12 +56,12 @@ Injector.prototype.get_dependency = function (name) {
  * differences is that the `length` property will always be zero.
  */
 Injector.prototype.bind = function (func, scope) {
-    var args = Injector.get_function_arguments(func),
+    var args = Injector.$$get_function_arguments(func),
         that = this;
 
     var copy = function () {
         return func.apply(scope,
-            that.generate_argument_list(args,
+            that.$$generate_argument_list(args,
                 Array.prototype.splice.call(arguments, 0)));
     };
 
@@ -79,12 +89,12 @@ Injector.prototype.trigger = function (func, scope) {
 /**
  * takes an array of arguments that were passed to a Injector'ifyed function
  * and returns another array of arguments that should should be used instead
- * @method generate_argument_list
+ * @method $$generate_argument_list
  * @param {Array} arglist original list of function arguments
  * @param {Array} callargs array of arguments that were pass to function
  * @return {Array} array of parameters that should be passed to function
  */
-Injector.prototype.generate_argument_list = function (arglist, callargs) {
+Injector.prototype.$$generate_argument_list = function (arglist, callargs) {
     var calllen = callargs.length,
         arglen = arglist.length,
         dicount = 0,
@@ -95,9 +105,9 @@ Injector.prototype.generate_argument_list = function (arglist, callargs) {
     for (; dicount < arglen; dicount++) {
         arg = arglist[ dicount ];
 
-        if (this.is_di_argument(arg)) {
+        if (this.has(arg)) {
             // auto di argument
-            arg = this.get_dependency(arg);
+            arg = this.get(arg);
         } else if (callcount < calllen) {
             // manually pass argument
             arg = callargs[ callcount++ ];
@@ -113,23 +123,13 @@ Injector.prototype.generate_argument_list = function (arglist, callargs) {
 };
 
 /**
- * checks if an argument name is a dependency injection argument
- * @method is_di_argument
- * @param {string} argname
- * @return {Boolean}
- */
-Injector.prototype.is_di_argument = function (argname) {
-    return argname in this.deps;
-};
-
-/**
  * returns the arguments a function takes
  * @static
- * @method get_function_arguments
+ * @method $$get_function_arguments
  * @param {Function} func
  * @return {Array}
  */
-Injector.get_function_arguments = function (func) {
+Injector.$$get_function_arguments = function (func) {
     var rawargs, args = [];
 
     rawargs = func.toString()

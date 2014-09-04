@@ -13,11 +13,11 @@ var Injector = require('argument-injector'),
     injector = new Injector();
 ```
 
-### `.dependency(/* String */ name, /* mixed */ value)`
+### `.register(/* String */ name, /* mixed */ value)`
 this is how dependencies are registered with the injector object
 
 ```js
-injector.dependency('myService', {
+injector.register('myService', {
     isActive: function () {
         return true;
     }
@@ -45,10 +45,10 @@ myFunction() // myService will be injected
 ```
 
 ### `.trigger(/* Function */ func, /* Object */ scope)`
-there's also the possiblity to bind and trigger functions all in one swoop
+there's also the possibility to bind and trigger functions all in one swoop
 
 ```js
-injected.dependency('name', 'Marcos');
+injected.register('name', 'Marcos');
 
 // binds then triggers the function. outputs 'Marcos'
 injector.trigger(function (name) {
