@@ -1,6 +1,6 @@
 {
   "name": "argument-injector",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "arguments injector for node",
   "main": "src/injector.js",
   "repository": {
