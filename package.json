@@ -8,7 +8,6 @@
     "url": "http://github.com/minond/argument-injector"
   },
   "scripts": {
-    "postinstall": "git submodule update --init",
     "test": "grunt"
   },
   "devDependencies": {
