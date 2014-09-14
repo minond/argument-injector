@@ -3,6 +3,11 @@
   "version": "1.0.1",
   "description": "arguments injector for node",
   "main": "src/injector.js",
+  "keywords": [
+    "function",
+    "argument",
+    "dependency injection"
+  ],
   "repository": {
     "type": "git",
     "url": "http://github.com/minond/argument-injector"
