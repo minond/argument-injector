@@ -20,5 +20,16 @@
     "jscs": "^1.7.3",
     "jshint": "^2.5.10",
     "mocha": "^2.0.1"
+  },
+  "testling": {
+    "harness" : "mocha",
+    "files": "test/*.js",
+    "browsers": [
+        "ie10",
+        "firefox/15",
+        "chrome/22",
+        "opera/12",
+        "safari/5.1"
+    ]
   }
 }
