@@ -15,6 +15,7 @@
   "devDependencies": {
     "complexity-report": "^1.0.6",
     "coveralls": "^2.11.2",
+    "expect.js": "^0.3.1",
     "istanbul": "^0.3.2",
     "jscs": "^1.7.3",
     "jshint": "^2.5.10",
