@@ -1,20 +1,27 @@
 [![Build Status](https://travis-ci.org/minond/argument-injector.svg?branch=master)](https://travis-ci.org/minond/argument-injector)
 [![Coverage Status](https://coveralls.io/repos/minond/argument-injector/badge.png?branch=master)](https://coveralls.io/r/minond/argument-injector?branch=master)
 
-`injector` is a basic argument injector for Node.js. it allows any function to
-be "bound" to an injector object which hijacks the function call and injects
-arguments when the function is executed.
+`argument-injector` is a function argument injector for JavaScript. it allows
+any function to be "bound" to an injector object, which hijacks the function
+call and injects arguments when the function is executed.
 
-### `Injector`
-acts as a holder of dependencies
+#### usage
+
+to get started, you'll first need to create a new instance of an `Injector`:
 
 ```js
 var Injector = require('argument-injector'),
     injector = new Injector();
 ```
 
-### `.register(/* String */ name, /* mixed */ value)`
-this is how dependencies are registered with the injector object
+this `injector` object will have three methods you care about: `#register`,
+`#bind`, and `#trigger`
+
+##### register
+
+this method allows you to "save" a variable in the injector object. there are
+the variables that are available during a function call. this is the signature
+of the method: `Injector register(String name, * variable)`
 
 ```js
 injector.register('myService', {
@@ -23,35 +30,38 @@ injector.register('myService', {
     }
 });
 ```
-### `.bind(/* Function */ func, /* Object */ scope)`
-and this is how functions are "bound" to the injector object functions are
-defined the way you normally would - as if you were going to pass the arguments
-manually:
+
+##### bind
+
+the `bind` method is what ties a function to your injector. this works by
+taking your function, and returning a copy which checks for arguments passed
+and arguments available in the injector when the function is invoked. this is
+the signature of the method: `Function bind(Function func, Object scope)`
 
 ```js
-function myFunction(myService) {
+var myFunction = injector.bind(function (myService) {
     return myService.isActive() ? 'you are active' : 'you are not active';
-}
+});
 ```
 
-then you can bind them to your injector
-```js
-myFunction = injector.bind(myFunction);
-```
+you can call `myFunction` the same way you would any other function, with the
+exception that you do not need to pass it a `myService` variable.
 
-you can call the function and your dependencies will be passed automatically
-```js
-myFunction() // myService will be injected
-```
+bind will parse the signature of the function you gave it and generate a list
+of the required arguments. once the function is invoked, this list of arguments
+is checked against the registered variables and passed to the real function.
 
-### `.trigger(/* Function */ func, /* Object */ scope)`
-there's also the possibility to bind and trigger functions all in one swoop
+##### trigger
+
+there's also a `trigger` method, which works just like `bind`, except it will
+invoke the funciton immediatelly and return that call's return value instead of
+a bound function. this is the signature of the method: `* trigger(Function
+func, Object scope)`
 
 ```js
 injected.register('name', 'Marcos');
-
-// binds then triggers the function. outputs 'Marcos'
 injector.trigger(function (name) {
+    // will output 'Marcos'
     console.log(name);
 });
 ```
