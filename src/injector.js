@@ -4,7 +4,7 @@
  * @class Injector
  * @constructor
  */
-function Injector () {
+function Injector() {
     /**
      * holds all dependencies. keyed by dep name
      * @property deps
