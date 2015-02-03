@@ -59,10 +59,8 @@ Injector.prototype.bind = function (func, scope) {
     var args = Injector.$$get_function_arguments(func),
         that = this;
 
-    var copy = function () {
-        return func.apply(scope,
-            that.$$generate_argument_list(args,
-                Array.prototype.splice.call(arguments, 0)));
+    var copy = function (user) {
+        return func.apply(scope, that.$$generate_argument_list(args, user));
     };
 
     copy.valueOf = function () {
@@ -91,29 +89,31 @@ Injector.prototype.trigger = function (func, scope) {
  * and returns another array of arguments that should should be used instead
  * @method $$generate_argument_list
  * @param {Array} arglist original list of function arguments
- * @param {Array} callargs array of arguments that were pass to function
+ * @param {Object} [userargs] object of arguments that were pass to function
  * @return {Array} array of parameters that should be passed to function
  */
-Injector.prototype.$$generate_argument_list = function (arglist, callargs) {
-    var calllen = callargs.length,
-        arglen = arglist.length,
+Injector.prototype.$$generate_argument_list = function (arglist, userargs) {
+    var arglen = arglist.length,
         dicount = 0,
-        callcount = 0,
         diargs = [],
         arg;
+
+    if (!userargs) {
+        userargs = {};
+    }
 
     for (; dicount < arglen; dicount++) {
         arg = arglist[ dicount ];
 
-        if (this.has(arg)) {
+        if (arg in userargs) {
+            // manually pass argument
+            arg = userargs[ arg ];
+        } else if (this.has(arg)) {
             // auto di argument
             arg = this.get(arg);
-        } else if (callcount < calllen) {
-            // manually pass argument
-            arg = callargs[ callcount++ ];
         } else {
             // expecting this argument but not passed in call
-            arg = null;
+            arg = undefined;
         }
 
         diargs.push(arg);

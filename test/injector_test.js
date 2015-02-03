@@ -75,12 +75,12 @@ describe('Injector', function () {
 
     describe('argument list generator', function () {
         it('non injector args are not ignored', function () {
-            args = injector.$$generate_argument_list(['one', 'two'], [1, 2]);
+            args = injector.$$generate_argument_list(['one', 'two'], {one: 1, two: 2});
             expect(args).to.eql([1, 2]);
         });
 
         it('extra arguments are not ignored', function () {
-            args = injector.$$generate_argument_list(['one', 'two'], [1, 2, 3, 4]);
+            args = injector.$$generate_argument_list(['one', 'two'], {three: 3, two: 2, one: 1});
             expect(args).to.eql([1, 2]);
         });
 
@@ -90,29 +90,16 @@ describe('Injector', function () {
             expect(args).to.eql([1]);
         });
 
-        it('injector arguments are not overwritten', function () {
-            injector.register('one', 1);
-            args = injector.$$generate_argument_list(['one'], [2]);
-            expect(args).to.eql([1]);
-        });
-
         it('injector arguments can be mixed with regular arguments, manual middle', function () {
             injector.register('one', 1);
             injector.register('two', 2);
-            args = injector.$$generate_argument_list(['one', 'three', 'two'], [3]);
+            args = injector.$$generate_argument_list(['one', 'three', 'two'], {three: 3});
             expect(args).to.eql([1, 3, 2]);
         });
 
-        it('multiple injector arguments', function () {
-            injector.register('one', 1);
-            injector.register('two', 2);
-            args = injector.$$generate_argument_list(['one', 'two'], []);
-            expect(args).to.eql([1, 2]);
-        });
-
         it('passing no arguments acts the same', function () {
-            args = injector.$$generate_argument_list(['one', 'two'], []);
-            expect(args).to.eql([null, null]);
+            args = injector.$$generate_argument_list(['one', 'two'], {});
+            expect(args).to.eql([undefined, undefined]);
         });
     });
 
@@ -142,7 +129,7 @@ describe('Injector', function () {
             };
 
             ifunc = injector.bind(func);
-            expect(ifunc(1)).to.be(func(1));
+            expect(ifunc({num: 1})).to.be(func(1));
         });
 
         it('injector arguments as passed', function () {
