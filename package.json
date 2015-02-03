@@ -1,6 +1,6 @@
 {
   "name": "argument-injector",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "arguments injector for node",
   "main": "src/injector.js",
   "keywords": [
@@ -22,14 +22,14 @@
     "mocha": "^2.0.1"
   },
   "testling": {
-    "harness" : "mocha",
+    "harness": "mocha",
     "files": "test/*.js",
     "browsers": [
-        "ie10",
-        "firefox/15",
-        "chrome/22",
-        "opera/12",
-        "safari/5.1"
+      "ie10",
+      "firefox/15",
+      "chrome/22",
+      "opera/12",
+      "safari/5.1"
     ]
   }
 }
