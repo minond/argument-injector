@@ -22,7 +22,7 @@ function Injector() {
  * @return {Injector} own instance
  */
 Injector.prototype.register = function (name, dep) {
-    this.deps[ name ] = dep;
+    this.deps[name] = dep;
     return this;
 };
 
@@ -33,7 +33,7 @@ Injector.prototype.register = function (name, dep) {
  * @return {mixed} the actual dependency variable
  */
 Injector.prototype.get = function (name) {
-    return this.has(name) ? this.deps[ name ] : null;
+    return this.has(name) ? this.deps[name] : null;
 };
 
 /**
@@ -80,7 +80,7 @@ Injector.prototype.bind = function (func, scope) {
  * @param {Object} scope
  */
 Injector.prototype.trigger = function (func, scope) {
-    func = func instanceof Function ? func : scope[ func ];
+    func = func instanceof Function ? func : scope[func];
     return this.bind(func, scope)();
 };
 
@@ -103,11 +103,11 @@ Injector.prototype.$$generate_argument_list = function (arglist, userargs) {
     }
 
     for (; dicount < arglen; dicount++) {
-        arg = arglist[ dicount ];
+        arg = arglist[dicount];
 
         if (arg in userargs) {
             // manually pass argument
-            arg = userargs[ arg ];
+            arg = userargs[arg];
         } else if (this.has(arg)) {
             // auto di argument
             arg = this.get(arg);
