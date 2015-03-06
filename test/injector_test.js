@@ -71,6 +71,21 @@ describe('Injector', function () {
                 }
             })).to.eql([]);
         });
+
+        it('returns the $inject property when found', function () {
+            var func = function () {};
+            func.$inject = ['one', 'two'];
+            expect(Injector.$$get_function_arguments(func)).to.eql(['one', 'two']);
+        });
+
+        it('prefers $inject property over actual arguments', function () {
+            var func = function (two, one) {
+                return one + two;
+            };
+
+            func.$inject = ['one', 'two'];
+            expect(Injector.$$get_function_arguments(func)).to.eql(['one', 'two']);
+        });
     });
 
     describe('argument list generator', function () {

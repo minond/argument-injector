@@ -132,6 +132,10 @@ Injector.prototype.$$generate_argument_list = function (arglist, userargs) {
 Injector.$$get_function_arguments = function (func) {
     var rawargs, args = [];
 
+    if (func.$inject) {
+        return func.$inject;
+    }
+
     rawargs = func.toString()
         // clean up white space, easier to find and clean up arg list
         .replace(/\s+/g, '')
