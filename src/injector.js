@@ -150,4 +150,7 @@ Injector.$$get_function_arguments = function (func) {
     return args;
 };
 
-module.exports = Injector;
+/* istanbul ignore else */
+if (typeof module !== 'undefined') {
+    module.exports = Injector;
+}
